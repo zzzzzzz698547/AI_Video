@@ -313,6 +313,103 @@ npm run dev:all
 
 - [AI_Video](https://github.com/zzzzzzz698547/AI_Video)
 
+## Render 部署 API
+
+目前這個 monorepo 已經附上根目錄的 [render.yaml](C:/Users/user/Desktop/AI-VIDIO/render.yaml)，可以直接讓 Render 從 GitHub 匯入 Blueprint。
+
+### 建議部署方式
+
+- `apps/web`：維持部署在 Vercel
+- `apps/admin-dashboard`：維持部署在 Vercel
+- `apps/api`：部署到 Render
+- PostgreSQL：直接使用 Render Managed Postgres
+
+### 匯入步驟
+
+1. 先把目前專案推到 GitHub `main`
+2. 在 Render 後台選 `New +`
+3. 選 `Blueprint`
+4. 連接 GitHub 倉庫：
+   - [AI_Video](https://github.com/zzzzzzz698547/AI_Video)
+5. Render 會自動讀取根目錄的 `render.yaml`
+6. 確認會建立：
+   - `ai-vidio-api` Web Service
+   - `ai-vidio-db` Postgres Database
+7. 建立完成後，到 `ai-vidio-api` 的 Environment 補齊敏感變數
+
+### Render 需要手動補的環境變數
+
+以下欄位在 Blueprint 內保留成手動填寫：
+
+- `NEXT_PUBLIC_API_BASE_URL`
+- `APP_BASE_URL`
+- `OPENAI_API_KEY`
+- `GEMINI_API_KEY`
+- `META_APP_ID`
+- `META_APP_SECRET`
+- `FB_APP_ID`
+- `FB_APP_SECRET`
+- `FB_REDIRECT_URI`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `LINE_CHANNEL_ACCESS_TOKEN`
+- `LINE_CHANNEL_SECRET`
+- `FACEBOOK_PAGE_ACCESS_TOKEN`
+- `INSTAGRAM_DM_ACCESS_TOKEN`
+
+### Render 建立完成後要這樣回填
+
+假設 Render API 網址是：
+
+```txt
+https://ai-vidio-api.onrender.com
+```
+
+請至少補這幾個：
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://ai-vidio-api.onrender.com
+APP_BASE_URL=https://ai-vidio-api.onrender.com
+FB_REDIRECT_URI=https://ai-vidio-api.onrender.com/auth/facebook/callback
+```
+
+如果前端仍在 Vercel，建議同步確認：
+
+```txt
+CORS_ORIGIN=https://ai-vidio-web.vercel.app,https://ai-vidio-admin.vercel.app,http://localhost:3000,http://localhost:3002
+WEB_BASE_URL=https://ai-vidio-web.vercel.app
+NEXT_PUBLIC_WEB_BASE_URL=https://ai-vidio-web.vercel.app
+```
+
+### Vercel 也要同步更新
+
+前端部署到 Vercel 後，請把 Vercel 專案內的：
+
+```txt
+NEXT_PUBLIC_API_BASE_URL
+```
+
+改成你的 Render API 網址，否則前台仍會打回本機或舊的 tunnel。
+
+### 部署後驗證
+
+請先確認：
+
+1. `https://your-render-api/health` 可回應
+2. Web 與 Admin 的前端環境變數已指向 Render API
+3. Meta / Google OAuth Console 的 callback 已改成 Render 正式網址
+4. `db:push` 在 Render 首次部署有成功執行
+
+### 注意
+
+- `render.yaml` 目前只部署 API 與資料庫，不會替你部署兩個 Next.js 前端
+- Redis 在這個專案是選配；沒填 `REDIS_URL` 時會自動走 fallback，不會阻止 API 啟動
+- 如果你之後改了 Render 服務網址，記得同步更新：
+  - Vercel `NEXT_PUBLIC_API_BASE_URL`
+  - `APP_BASE_URL`
+  - `FB_REDIRECT_URI`
+  - Meta / Google OAuth callback
+
 ## 部署前提醒
 
 如果要從本機開發走到正式部署，建議至少先完成這些：

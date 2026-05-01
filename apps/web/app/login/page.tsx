@@ -20,12 +20,24 @@ const defaultForm = {
   password: ""
 };
 
+function normalizeBaseUrl(value?: string) {
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .trim()
+    .replace(/^["'\s\\]+/, "")
+    .replace(/["'\s\\]+$/, "")
+    .replace(/\/+$/, "");
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [form, setForm] = useState(defaultForm);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const adminBaseUrl = useMemo(() => process.env.NEXT_PUBLIC_ADMIN_BASE_URL?.trim() || "http://localhost:3002", []);
+  const adminBaseUrl = useMemo(() => normalizeBaseUrl(process.env.NEXT_PUBLIC_ADMIN_BASE_URL) || "http://localhost:3002", []);
 
   useEffect(() => {
     const currentSession = readAdminSession();

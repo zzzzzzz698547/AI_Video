@@ -1,0 +1,1837 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContentStyle {
+  AUTO
+  HOT_SALE
+  PREMIUM
+  HUMOR
+  EDUCATIONAL
+}
+
+enum ContentVariantType {
+  TITLE
+  POST_COPY
+  SCRIPT
+}
+
+enum VideoStyle {
+  AUTO
+  SALES
+  PREMIUM
+  TECH
+  SOCIAL
+}
+
+enum VideoStatus {
+  DRAFT
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum VideoMediaMode {
+  REAL_MEDIA
+  AI_IMAGE
+  HYBRID
+}
+
+enum AiProviderType {
+  OPENAI
+  GEMINI
+}
+
+enum UrlAnalysisStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum UrlAnalysisSourceType {
+  YOUTUBE
+  TIKTOK
+  INSTAGRAM
+  FACEBOOK
+  THREADS
+  VIMEO
+  GENERIC
+}
+
+enum UrlAnalysisVariantType {
+  TITLE
+  HIGHLIGHT
+  SCRIPT
+  CUT_PLAN
+}
+
+enum VideoSegmentType {
+  HOOK
+  BODY
+  CTA
+}
+
+enum MediaAssetType {
+  IMAGE
+  VIDEO
+  AUDIO
+  LOGO
+  SUBTITLE
+  THUMBNAIL
+}
+
+enum MediaSourceType {
+  MOCK
+  FREE_LIBRARY
+  GENERATIVE
+}
+
+enum PublishingPlatform {
+  FACEBOOK
+  INSTAGRAM
+  THREADS
+  YOUTUBE
+}
+
+enum SocialPlatform {
+  FACEBOOK_PAGE
+  INSTAGRAM
+  THREADS
+}
+
+enum SocialAdapterStatus {
+  ACTIVE
+  EXPIRED
+  ERROR
+}
+
+enum SocialPublishJobStatus {
+  DRAFT
+  QUEUED
+  PUBLISHING
+  SUCCESS
+  FAILED
+}
+
+enum TenantStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+}
+
+enum LicensePlan {
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+enum TenantUserRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum LicenseKeyStatus {
+  UNUSED
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+enum PublishingStatus {
+  DRAFT
+  QUEUED
+  SCHEDULED
+  PROCESSING
+  SUCCESS
+  FAILED
+  RETRYING
+  PARTIAL_SUCCESS
+}
+
+enum PublishSourceType {
+  VIDEO_OUTPUT
+  CONTENT_VARIANT
+}
+
+enum OptimizationTargetModule {
+  CONTENT
+  VIDEO
+  CRM
+}
+
+enum OptimizationRuleType {
+  TITLE
+  HOOK
+  CTA
+  SCHEDULE
+  LENGTH
+  STYLE
+  KEYWORD
+  PLATFORM
+}
+
+enum AbTestStatus {
+  DRAFT
+  RUNNING
+  COMPLETED
+  PAUSED
+  FAILED
+}
+
+enum QueueState {
+  PENDING
+  ENQUEUED
+  PROCESSING
+  DONE
+  FAILED
+}
+
+enum WorkspaceStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum BrandStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum ProductStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum ContentStatus {
+  DRAFT
+  GENERATED
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum VideoRecordStatus {
+  DRAFT
+  PROCESSING
+  READY
+  FAILED
+  ARCHIVED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  NEGOTIATING
+  WON
+  LOST
+}
+
+enum ConversationStatus {
+  OPEN
+  PENDING
+  CLOSED
+}
+
+enum SalesStage {
+  NEW_INQUIRY
+  INFO_REQUESTED
+  CONSIDERING
+  PRICE_DISCUSSED
+  HIGH_INTENT
+  PAYMENT_PENDING
+  WON
+  LOST
+  AFTER_SALES
+}
+
+enum RecommendedNextAction {
+  ASK_CLARIFYING_QUESTION
+  SEND_PRICE_LIST
+  SEND_RECOMMENDATION_LIST
+  INVITE_TO_FORM
+  INVITE_TO_LINE
+  TRANSFER_TO_HUMAN
+  SEND_OFFER
+  AFTER_SALES_FOLLOW_UP
+}
+
+enum CustomerTemperature {
+  COLD
+  WARM
+  HOT
+}
+
+enum IntentLabel {
+  ASK_PRICE
+  ASK_SPEC
+  ASK_STOCK
+  ASK_INSTALLATION
+  ASK_PAYMENT
+  COMPARE_PRODUCTS
+  HIGH_BUY_INTENT
+  JUST_BROWSING
+  AFTER_SALES
+  COMPLAINT
+  UNKNOWN
+}
+
+enum MessageSender {
+  CUSTOMER
+  AI
+  HUMAN
+  SYSTEM
+}
+
+enum HandoffStatus {
+  NONE
+  REQUESTED
+  PENDING
+  ASSIGNED
+  RESOLVED
+}
+
+enum HandoffReason {
+  HIGH_VALUE
+  COMPLAINT
+  UNCERTAIN_ANSWER
+  REQUESTED_BY_CUSTOMER
+  COMPLIANCE
+  MANUAL
+}
+
+enum KnowledgeArticleType {
+  FAQ
+  PRODUCT
+  POLICY
+  BRAND_TONE
+  PROHIBITED
+}
+
+enum FollowUpRuleTrigger {
+  NO_REPLY
+  HOT_LEAD
+  FORM_SUBMITTED
+  PURCHASE_COMPLETED
+  AFTER_PURCHASE
+}
+
+enum ChannelAdapterType {
+  WEBSITE_CHAT
+  FACEBOOK_MESSENGER
+  INSTAGRAM_DM
+  LINE_OFFICIAL_ACCOUNT
+  COMMENT_TO_LEAD
+}
+
+enum ChannelAdapterStatus {
+  ACTIVE
+  PAUSED
+  ERROR
+}
+
+enum MetaDataDeletionStatus {
+  RECEIVED
+  PROCESSING
+  COMPLETED
+  NOT_FOUND
+  FAILED
+}
+
+enum CommentLeadStatus {
+  NEW
+  REPLIED
+  DM_SENT
+  FORM_SENT
+  CONVERTED
+  IGNORED
+}
+
+enum EscalationSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum DealStatus {
+  NEW
+  CONTACTED
+  NEGOTIATING
+  WON
+  LOST
+}
+
+enum LeadSourcePlatform {
+  IG
+  FB
+  THREADS
+  YOUTUBE
+  DIRECT
+  UNKNOWN
+}
+
+enum FollowUpChannel {
+  LINE
+  EMAIL
+  WEBHOOK
+}
+
+enum LandingPageStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  EDITOR
+  ANALYST
+  SUPPORT
+}
+
+model ContentRequest {
+  id               String           @id @default(cuid())
+  tenantId         String?
+  productName      String
+  productDescription String
+  targetAudience   String
+  priceRange       String?
+  usageScenario    String?
+  keywords         String[]
+  requestedStyle   ContentStyle     @default(AUTO)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  tenant           Tenant?          @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  generatedContent GeneratedContent?
+
+  @@index([tenantId, createdAt])
+  @@map("content_requests")
+}
+
+model GeneratedContent {
+  id             String            @id @default(cuid())
+  tenantId       String?
+  requestId      String            @unique
+  resolvedStyle  ContentStyle
+  summary        String
+  titleCount     Int
+  postCount      Int
+  scriptCount    Int
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  tenant         Tenant?           @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  request        ContentRequest    @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  variants       ContentVariant[]
+  videoProjects   VideoProject[]
+
+  @@index([tenantId, createdAt])
+  @@map("generated_contents")
+}
+
+model ContentVariant {
+  id                   String             @id @default(cuid())
+  generatedContentId   String
+  variantType          ContentVariantType
+  variantIndex         Int
+  title                String?
+  previewText          String
+  payload              Json
+  hashtags             String[]
+  platforms            String[]
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  generatedContent     GeneratedContent    @relation(fields: [generatedContentId], references: [id], onDelete: Cascade)
+  publishingJobs       PublishingJob[]
+
+  @@map("content_variants")
+}
+
+model VideoProject {
+  id                  String         @id @default(cuid())
+  tenantId            String?
+  contentId           String
+  title               String
+  scriptSnapshot      Json
+  resolvedStyle       VideoStyle
+  mediaMode           VideoMediaMode @default(HYBRID)
+  targetDurationSeconds Int
+  aspectRatio         String         @default("9:16")
+  resolution          String         @default("1080x1920")
+  status              VideoStatus    @default(DRAFT)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  tenant              Tenant?        @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  content             GeneratedContent @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  segments            VideoSegment[]
+  assets              VideoAsset[]
+  output              VideoOutput?
+  socialPublishJobs   SocialPublishJob[]
+
+  @@index([tenantId, createdAt])
+  @@map("video_projects")
+}
+
+model AiProviderBinding {
+  id                 String          @id @default(cuid())
+  scopeKey           String          @default("GLOBAL")
+  provider           AiProviderType
+  label              String?
+  apiKeyEncrypted    String
+  apiKeyLast4        String
+  apiBaseUrl         String?
+  defaultModel       String?
+  isActive           Boolean         @default(true)
+  lastVerifiedAt     DateTime?
+  lastError          String?
+  metadata           Json?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@unique([scopeKey, provider])
+  @@map("ai_provider_bindings")
+}
+
+model VideoSegment {
+  id                String          @id @default(cuid())
+  videoProjectId    String
+  segmentType       VideoSegmentType
+  segmentIndex      Int
+  startSecond       Int
+  endSecond         Int
+  text              Json
+  voiceText         String
+  subtitleText      String
+  visualPrompt      String
+  transition        String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  videoProject      VideoProject    @relation(fields: [videoProjectId], references: [id], onDelete: Cascade)
+
+  @@map("video_segments")
+}
+
+model VideoAsset {
+  id                String          @id @default(cuid())
+  videoProjectId    String
+  segmentId         String?
+  assetType         MediaAssetType
+  sourceType        MediaSourceType
+  title             String
+  sourceUrl         String?
+  localPath         String?
+  prompt            String
+  durationSeconds   Int
+  metadata          Json?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  videoProject      VideoProject    @relation(fields: [videoProjectId], references: [id], onDelete: Cascade)
+
+  @@map("video_assets")
+}
+
+model VideoOutput {
+  id                String          @id @default(cuid())
+  tenantId          String?
+  videoProjectId    String          @unique
+  filePath          String
+  publicUrl         String?
+  fileSizeBytes     BigInt?
+  width             Int
+  height            Int
+  durationSeconds   Int
+  outputFormat      String          @default("mp4")
+  status            VideoStatus     @default(READY)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  tenant            Tenant?         @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  videoProject      VideoProject    @relation(fields: [videoProjectId], references: [id], onDelete: Cascade)
+  publishingJobs    PublishingJob[]
+
+  @@index([tenantId, createdAt])
+  @@map("video_outputs")
+}
+
+model PlatformAccount {
+  id                  String            @id @default(cuid())
+  tenantId            String?
+  workspaceId         String?
+  brandId             String?
+  platform            PublishingPlatform
+  accountName         String
+  displayName         String?
+  externalAccountId    String?
+  isActive            Boolean           @default(true)
+  metadata            Json?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  tenant              Tenant?           @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  workspace           Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  brand               Brand?            @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  token               PlatformToken?
+
+  @@index([tenantId, platform, createdAt])
+  @@map("platform_accounts")
+}
+
+model PlatformToken {
+  id                      String            @id @default(cuid())
+  platformAccountId       String            @unique
+  accessTokenEncrypted    String
+  refreshTokenEncrypted   String?
+  tokenType               String            @default("oauth2")
+  expiresAt               DateTime?
+  scopes                  String[]
+  metadata                Json?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  account                 PlatformAccount   @relation(fields: [platformAccountId], references: [id], onDelete: Cascade)
+
+  @@map("platform_tokens")
+}
+
+model SocialAdapter {
+  id                    String              @id @default(cuid())
+  tenantId              String
+  platform              SocialPlatform
+  accountName           String
+  displayName           String?
+  externalAccountId     String
+  accessTokenEncrypted  String
+  refreshTokenEncrypted String?
+  scopes                String[]
+  status                SocialAdapterStatus @default(ACTIVE)
+  tokenExpiresAt        DateTime?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  tenant                Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  jobs                  SocialPublishJob[]
+
+  @@unique([tenantId, platform, externalAccountId])
+  @@index([tenantId, platform, status])
+  @@map("social_adapters")
+}
+
+model SocialPublishJob {
+  id             String                 @id @default(cuid())
+  tenantId       String
+  videoId        String
+  platform       SocialPlatform
+  adapterId      String
+  caption        String
+  mediaUrl       String
+  scheduledAt    DateTime?
+  status         SocialPublishJobStatus @default(DRAFT)
+  externalPostId String?
+  permalink      String?
+  errorMessage   String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  tenant         Tenant                 @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  video          VideoProject           @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  adapter        SocialAdapter          @relation(fields: [adapterId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, videoId, createdAt])
+  @@index([adapterId, status, scheduledAt])
+  @@map("social_publish_jobs")
+}
+
+model MetaDataDeletionRequest {
+  id                 String               @id @default(cuid())
+  metaUserId         String
+  confirmationCode   String               @unique
+  status             MetaDataDeletionStatus @default(RECEIVED)
+  callbackUrl        String
+  statusUrl          String
+  signedRequest      Json?
+  requestPayload     Json?
+  responsePayload    Json?
+  deletedPlatformAccounts Int              @default(0)
+  deletedPlatformTokens   Int              @default(0)
+  deletedChannelAdapters  Int              @default(0)
+  errorMessage       String?
+  metadata           Json?
+  completedAt        DateTime?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@index([metaUserId, createdAt])
+  @@map("meta_data_deletion_requests")
+}
+
+model PublishingJob {
+  id                 String              @id @default(cuid())
+  tenantId           String?
+  workspaceId        String?
+  brandId            String?
+  sourceType         PublishSourceType
+  contentVariantId   String?
+  videoOutputId      String?
+  caption            String
+  hashtags           String[]
+  platforms          PublishingPlatform[]
+  publishAt          DateTime?
+  status             PublishingStatus    @default(DRAFT)
+  attempts           Int                 @default(0)
+  maxAttempts        Int                 @default(5)
+  errorMessage       String?
+  retryAt            DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  tenant             Tenant?             @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  logs               PublishLog[]
+  queueItem          PublishQueue?
+  workspace          Workspace?          @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  contentVariant     ContentVariant?     @relation(fields: [contentVariantId], references: [id], onDelete: SetNull)
+  videoOutput        VideoOutput?        @relation(fields: [videoOutputId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, createdAt])
+  @@map("publishing_jobs")
+}
+
+model PublishLog {
+  id                 String            @id @default(cuid())
+  tenantId           String?
+  publishingJobId    String
+  platform           PublishingPlatform
+  action             String
+  status             PublishingStatus
+  requestPayload     Json?
+  responsePayload    Json?
+  errorMessage       String?
+  createdAt          DateTime          @default(now())
+  tenant             Tenant?           @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  publishingJob      PublishingJob     @relation(fields: [publishingJobId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, createdAt])
+  @@map("publish_logs")
+}
+
+model PublishQueue {
+  id                 String          @id @default(cuid())
+  tenantId           String?
+  publishingJobId    String          @unique
+  queueName          String
+  bullJobId          String?
+  queueState         QueueState      @default(PENDING)
+  scheduledFor       DateTime?
+  lastAttemptAt      DateTime?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  tenant             Tenant?         @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  publishingJob      PublishingJob   @relation(fields: [publishingJobId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, createdAt])
+  @@map("publish_queue")
+}
+
+model User {
+  id                String           @id @default(cuid())
+  email             String           @unique
+  name              String
+  avatarUrl         String?
+  status            String           @default("ACTIVE")
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  tenantMemberships TenantUser[]
+  memberships       WorkspaceMember[]
+  ownedWorkspaces   Workspace[]      @relation("WorkspaceOwner")
+
+  @@map("users")
+}
+
+model Tenant {
+  id                 String              @id @default(cuid())
+  name               String
+  status             TenantStatus        @default(ACTIVE)
+  plan               LicensePlan         @default(BASIC)
+  licenseExpiresAt   DateTime
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  licenseKeys        LicenseKey[]
+  users              TenantUser[]
+  workspaces         Workspace[]
+  contentRequests    ContentRequest[]
+  generatedContents  GeneratedContent[]
+  videoProjects      VideoProject[]
+  videoOutputs       VideoOutput[]
+  platformAccounts   PlatformAccount[]
+  socialAdapters     SocialAdapter[]
+  socialPublishJobs  SocialPublishJob[]
+  publishingJobs     PublishingJob[]
+  publishLogs        PublishLog[]
+  publishQueues      PublishQueue[]
+  urlAnalysisRequests VideoUrlAnalysisRequest[]
+
+  @@index([status, licenseExpiresAt])
+  @@map("tenants")
+}
+
+model TenantUser {
+  id         String         @id @default(cuid())
+  tenantId   String
+  userId     String
+  role       TenantUserRole @default(MEMBER)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  tenant     Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, userId])
+  @@index([userId, role])
+  @@map("tenant_users")
+}
+
+model LicenseKey {
+  id                String           @id @default(cuid())
+  code              String           @unique
+  plan              LicensePlan
+  maxUsers          Int
+  maxVideos         Int
+  maxSocialAccounts Int
+  expiresAt         DateTime
+  status            LicenseKeyStatus @default(UNUSED)
+  activatedAt       DateTime?
+  tenantId          String?          @unique
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  tenant            Tenant?          @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+
+  @@index([status, expiresAt])
+  @@map("license_keys")
+}
+
+model Workspace {
+  id                String           @id @default(cuid())
+  tenantId          String?
+  ownerId           String
+  name              String
+  slug              String           @unique
+  status            WorkspaceStatus   @default(ACTIVE)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  tenant            Tenant?          @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  owner             User             @relation("WorkspaceOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members           WorkspaceMember[]
+  brands            Brand[]
+  products          Product[]
+  contents          Content[]
+  videos            Video[]
+  videoUrlAnalysisRequests VideoUrlAnalysisRequest[]
+  platformAccounts  PlatformAccount[]
+  publishingJobs    PublishingJob[]
+  trackingLinks     TrackingLink[]
+  landingPages      LandingPage[]
+  deals             Deal[]
+  customerProfiles  CustomerProfile[]
+  customerTags      CustomerTag[]
+  conversations     Conversation[]
+  conversationMessages ConversationMessage[]
+  leadScores        LeadScore[]
+  intentPredictions IntentPrediction[]
+  aiReplyLogs       AiReplyLog[]
+  knowledgeBaseArticles KnowledgeBaseArticle[]
+  faqItems          FaqItem[]
+  handoffLogs       HandoffLog[]
+  followUpRules     FollowUpRule[]
+  followUpJobs      FollowUpJob[]
+  commentLeads      CommentLead[]
+  channelAdapters   ChannelAdapter[]
+  escalationRules   EscalationRule[]
+  messageTemplates  MessageTemplate[]
+  followUpLogs      FollowUpLog[]
+  metrics           Metric[]
+  leads             Lead[]
+
+  @@index([tenantId, createdAt])
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  userId            String
+  role              MemberRole       @default(EDITOR)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@map("workspace_members")
+}
+
+model Brand {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  name              String
+  slug              String
+  status            BrandStatus      @default(ACTIVE)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  products          Product[]
+  contents          Content[]
+  videos            Video[]
+  videoUrlAnalysisRequests VideoUrlAnalysisRequest[]
+  platformAccounts  PlatformAccount[]
+  publishingJobs    PublishingJob[]
+  trackingLinks     TrackingLink[]
+  landingPages      LandingPage[]
+  deals             Deal[]
+  customerProfiles  CustomerProfile[]
+  customerTags      CustomerTag[]
+  conversations     Conversation[]
+  conversationMessages ConversationMessage[]
+  leadScores        LeadScore[]
+  intentPredictions IntentPrediction[]
+  aiReplyLogs       AiReplyLog[]
+  knowledgeBaseArticles KnowledgeBaseArticle[]
+  faqItems          FaqItem[]
+  handoffLogs       HandoffLog[]
+  followUpRules     FollowUpRule[]
+  followUpJobs      FollowUpJob[]
+  commentLeads      CommentLead[]
+  channelAdapters   ChannelAdapter[]
+  escalationRules   EscalationRule[]
+  messageTemplates  MessageTemplate[]
+  followUpLogs      FollowUpLog[]
+  metrics           Metric[]
+  leads             Lead[]
+
+  @@unique([workspaceId, slug])
+  @@map("brands")
+}
+
+model Product {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String
+  name              String
+  slug              String
+  description       String?
+  status            ProductStatus    @default(ACTIVE)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  contents          Content[]
+  trackingLinks     TrackingLink[]
+  landingPages      LandingPage[]
+  leads             Lead[]
+  deals             Deal[]
+
+  @@unique([workspaceId, slug])
+  @@map("products")
+}
+
+model Content {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String
+  productId         String?
+  title             String
+  contentType       String
+  payload           Json
+  status            ContentStatus     @default(DRAFT)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  product           Product?         @relation(fields: [productId], references: [id], onDelete: SetNull)
+  videos            Video[]
+  trackingLinks     TrackingLink[]
+
+  @@map("contents")
+}
+
+model Video {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String
+  contentId         String?
+  title             String
+  filePath          String?
+  playbackUrl       String?
+  status            VideoRecordStatus @default(DRAFT)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  content           Content?         @relation(fields: [contentId], references: [id], onDelete: SetNull)
+  trackingLinks     TrackingLink[]
+
+  @@map("videos")
+}
+
+model VideoUrlAnalysisRequest {
+  id                  String                   @id @default(cuid())
+  tenantId            String?
+  workspaceId         String?
+  brandId             String?
+  sourceUrl           String
+  sourceHost          String
+  sourceType          UrlAnalysisSourceType    @default(GENERIC)
+  sourceTitle         String?
+  sourceDescription   String?
+  analysisGoal        String
+  analysisMode        String?
+  targetAudience      String?
+  desiredTone        String?
+  desiredLengthSeconds Int                      @default(30)
+  focusKeywords       String[]
+  status              UrlAnalysisStatus        @default(PROCESSING)
+  errorMessage        String?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+  tenant              Tenant?                  @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  workspace           Workspace?               @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  brand               Brand?                   @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  result              VideoUrlAnalysisResult?
+
+  @@index([tenantId, createdAt])
+  @@index([workspaceId, brandId, createdAt])
+  @@map("video_url_analysis_requests")
+}
+
+model VideoUrlAnalysisResult {
+  id                       String                    @id @default(cuid())
+  requestId                String                    @unique
+  topic                    String
+  summary                  String
+  keyTakeaways             String[]
+  highlightMoments         Json
+  suggestedCuts            Json
+  recommendedPlatforms     String[]
+  recommendedLengthSeconds Int
+  recommendedHook          String
+  recommendedCTA           String
+  confidenceScore          Float                     @default(0.5)
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  request                  VideoUrlAnalysisRequest   @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  variants                 VideoUrlAnalysisVariant[]
+
+  @@map("video_url_analysis_results")
+}
+
+model VideoUrlAnalysisVariant {
+  id                      String                 @id @default(cuid())
+  videoUrlAnalysisResultId String
+  variantType             UrlAnalysisVariantType
+  variantIndex            Int
+  title                   String?
+  previewText             String
+  payload                 Json
+  hashtags                String[]
+  platforms               String[]
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  result                  VideoUrlAnalysisResult @relation(fields: [videoUrlAnalysisResultId], references: [id], onDelete: Cascade)
+
+  @@map("video_url_analysis_variants")
+}
+
+model Metric {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  source            String
+  name              String
+  value             Float
+  dimensions        Json?
+  recordedAt        DateTime         @default(now())
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, name, recordedAt])
+  @@map("metrics")
+}
+
+model Lead {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  productId         String?
+  landingPageId     String?
+  trackingLinkId    String?
+  customerProfileId String?           @unique
+  name              String
+  email             String?
+  phone             String?
+  lineId            String?
+  status            LeadStatus       @default(NEW)
+  source            String?
+  sourcePlatform    LeadSourcePlatform @default(UNKNOWN)
+  salesStage        SalesStage       @default(NEW_INQUIRY)
+  temperature       CustomerTemperature @default(COLD)
+  recommendedNextAction RecommendedNextAction @default(ASK_CLARIFYING_QUESTION)
+  tags              String[]
+  notes             String?
+  lastContactedAt   DateTime?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  product           Product?         @relation(fields: [productId], references: [id], onDelete: SetNull)
+  landingPage       LandingPage?     @relation(fields: [landingPageId], references: [id], onDelete: SetNull)
+  trackingLink      TrackingLink?     @relation(fields: [trackingLinkId], references: [id], onDelete: SetNull)
+  customerProfile   CustomerProfile?  @relation("LeadToCustomerProfile", fields: [customerProfileId], references: [id], onDelete: SetNull)
+  conversations     Conversation[]
+  conversationMessages ConversationMessage[]
+  deals             Deal[]
+  followUpLogs      FollowUpLog[]
+  leadScores        LeadScore[]
+  intentPredictions IntentPrediction[]
+  aiReplyLogs       AiReplyLog[]
+  handoffLogs       HandoffLog[]
+  followUpJobs      FollowUpJob[]
+  commentLeads      CommentLead[]
+
+  @@map("leads")
+}
+
+model Conversation {
+  id                String            @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?
+  customerProfileId String?
+  sessionId         String?
+  channel           String
+  status            ConversationStatus @default(OPEN)
+  salesStage        SalesStage        @default(NEW_INQUIRY)
+  recommendedNextAction RecommendedNextAction @default(ASK_CLARIFYING_QUESTION)
+  assistantTone     String?
+  assistantStyle    String?
+  aiHandled         Boolean           @default(true)
+  humanHandled      Boolean           @default(false)
+  handoffStatus     HandoffStatus     @default(NONE)
+  lastIntentLabel   IntentLabel?
+  lastLeadScore     Int?
+  lastMessageAt     DateTime?
+  metadata          Json?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  workspace         Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?            @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?             @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  customerProfile   CustomerProfile?   @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+  messages          ConversationMessage[]
+  leadScores        LeadScore[]
+  intentPredictions IntentPrediction[]
+  aiReplyLogs       AiReplyLog[]
+  handoffLogs       HandoffLog[]
+  followUpJobs      FollowUpJob[]
+  commentLeads      CommentLead[]
+
+  @@map("conversations")
+  @@index([workspaceId, sessionId])
+}
+
+model CustomerProfile {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  name              String?
+  email             String?
+  phone             String?
+  lineId            String?
+  sourcePlatform    LeadSourcePlatform @default(UNKNOWN)
+  temperature       CustomerTemperature @default(COLD)
+  lifecycleStage    SalesStage       @default(NEW_INQUIRY)
+  preferredTone     String?
+  preferredStyle    String?
+  tags              String[]         @default([])
+  lastSeenAt        DateTime?
+  lastMessageAt     DateTime?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation("LeadToCustomerProfile")
+  conversations     Conversation[]
+  messages          ConversationMessage[]
+  leadScores        LeadScore[]
+  intentPredictions IntentPrediction[]
+  aiReplyLogs       AiReplyLog[]
+  handoffLogs       HandoffLog[]
+  followUpJobs      FollowUpJob[]
+
+  @@index([workspaceId, email])
+  @@index([workspaceId, phone])
+  @@map("customer_profiles")
+}
+
+model CustomerTag {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  name              String
+  slug              String
+  color             String?
+  description       String?
+  usageCount        Int              @default(0)
+  isActive          Boolean          @default(true)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+
+  @@unique([workspaceId, slug])
+  @@map("customer_tags")
+}
+
+model ConversationMessage {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  conversationId    String
+  customerProfileId String?
+  leadId            String?
+  sender            MessageSender
+  channel           String
+  content           String
+  externalMessageId String?
+  intentLabel       IntentLabel?
+  score             Int?
+  aiReplyLogId      String?
+  isRead            Boolean          @default(false)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  conversation      Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+  @@map("conversation_messages")
+}
+
+model LeadScore {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?
+  conversationId    String?
+  customerProfileId String?
+  score             Int
+  temperature       CustomerTemperature
+  stage             SalesStage
+  signals           Json?
+  reason            String
+  isLatest          Boolean          @default(true)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation?    @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, score])
+  @@map("lead_scores")
+}
+
+model IntentPrediction {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?
+  conversationId    String
+  messageId         String?
+  customerProfileId String?
+  label             IntentLabel
+  confidence        Float
+  query             String
+  signals           Json?
+  reasoning         String?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, label])
+  @@map("intent_predictions")
+}
+
+model AiReplyLog {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?
+  conversationId    String
+  messageId         String?
+  customerProfileId String?
+  model             String
+  provider          String
+  promptVersion     String
+  tone              String?
+  style             String?
+  replyText         String
+  safetyStatus      String           @default("SAFE")
+  suggestedHandoff  Boolean          @default(false)
+  tokenUsage        Json?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@map("ai_reply_logs")
+}
+
+model KnowledgeBaseArticle {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  articleType       KnowledgeArticleType @default(FAQ)
+  title             String
+  slug              String
+  summary           String?
+  content           String
+  keywords          String[]         @default([])
+  isPublished       Boolean          @default(true)
+  version           Int              @default(1)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  faqItems          FaqItem[]
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId, articleType])
+  @@map("knowledge_base_articles")
+}
+
+model FaqItem {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  articleId         String?
+  question          String
+  answer            String
+  keywords          String[]         @default([])
+  sortOrder         Int              @default(0)
+  isActive          Boolean          @default(true)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  article           KnowledgeBaseArticle? @relation(fields: [articleId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, sortOrder])
+  @@unique([workspaceId, question])
+  @@map("faq_items")
+}
+
+model HandoffLog {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?
+  conversationId    String
+  customerProfileId String?
+  status            HandoffStatus    @default(REQUESTED)
+  severity          EscalationSeverity @default(MEDIUM)
+  reason            HandoffReason    @default(MANUAL)
+  assignedToUserId  String?
+  assignedByUserId  String?
+  note              String?
+  metadata          Json?
+  openedAt          DateTime         @default(now())
+  closedAt          DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, status])
+  @@map("handoff_logs")
+}
+
+model FollowUpRule {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  name              String
+  trigger           FollowUpRuleTrigger
+  delayMinutes      Int              @default(0)
+  channel           FollowUpChannel
+  templateTitle     String?
+  templateBody      String
+  conditions        Json?
+  isActive          Boolean          @default(true)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  jobs              FollowUpJob[]
+
+  @@index([workspaceId, trigger])
+  @@map("follow_up_rules")
+}
+
+model FollowUpJob {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  ruleId            String?
+  leadId            String?
+  conversationId    String?
+  customerProfileId String?
+  channel           FollowUpChannel
+  status            String           @default("PENDING")
+  runAt             DateTime
+  executedAt        DateTime?
+  attempts          Int              @default(0)
+  lastError         String?
+  payload           Json?
+  result            Json?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  rule              FollowUpRule?    @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customerProfile   CustomerProfile?  @relation(fields: [customerProfileId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, status, runAt])
+  @@map("follow_up_jobs")
+}
+
+model CommentLead {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  contentId         String?
+  videoId           String?
+  postId            String
+  commentId         String
+  sourcePlatform    LeadSourcePlatform @default(UNKNOWN)
+  commenterName     String?
+  commentText       String
+  leadId            String?
+  conversationId    String?
+  autoReplyText     String?
+  status            CommentLeadStatus @default(NEW)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@unique([workspaceId, postId, commentId])
+  @@index([workspaceId, sourcePlatform, createdAt])
+  @@map("comment_leads")
+}
+
+model ChannelAdapter {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  adapterType       ChannelAdapterType
+  provider          String
+  externalAccountId String?
+  status            ChannelAdapterStatus @default(PAUSED)
+  config            Json?
+  lastSyncedAt      DateTime?
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, adapterType, status])
+  @@map("channel_adapters")
+}
+
+model EscalationRule {
+  id                String           @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  name              String
+  severity          EscalationSeverity @default(MEDIUM)
+  triggerPhrase     String?
+  triggerIntent     IntentLabel?
+  triggerStage      SalesStage?
+  autoHandoff       Boolean          @default(true)
+  notifyRoles       String[]
+  conditions        Json?
+  isActive          Boolean          @default(true)
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, severity])
+  @@map("escalation_rules")
+}
+
+model TrackingLink {
+  id                String               @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  productId         String?
+  contentId         String?
+  videoId           String?
+  landingPageId     String?
+  code              String               @unique
+  shortPath         String               @unique
+  destinationUrl    String
+  sourcePlatform    LeadSourcePlatform   @default(UNKNOWN)
+  campaignName      String?
+  isActive          Boolean              @default(true)
+  metadata          Json?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  workspace         Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  product           Product?             @relation(fields: [productId], references: [id], onDelete: SetNull)
+  content           Content?             @relation(fields: [contentId], references: [id], onDelete: SetNull)
+  video             Video?               @relation(fields: [videoId], references: [id], onDelete: SetNull)
+  landingPage       LandingPage?         @relation(fields: [landingPageId], references: [id], onDelete: SetNull)
+  clicks            ClickEvent[]
+  leads             Lead[]
+
+  @@index([workspaceId, code])
+  @@map("tracking_links")
+}
+
+model ClickEvent {
+  id                String               @id @default(cuid())
+  trackingLinkId    String
+  clickedAt         DateTime             @default(now())
+  sourcePlatform    LeadSourcePlatform   @default(UNKNOWN)
+  device            String?
+  ipAddress         String?
+  userAgent         String?
+  referrer          String?
+  country           String?
+  metadata          Json?
+  createdAt         DateTime             @default(now())
+  trackingLink      TrackingLink         @relation(fields: [trackingLinkId], references: [id], onDelete: Cascade)
+
+  @@index([trackingLinkId, clickedAt])
+  @@map("click_events")
+}
+
+model LandingPage {
+  id                String               @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  productId         String?
+  slug              String
+  variantKey        String               @default("default")
+  status            LandingPageStatus    @default(DRAFT)
+  title             String
+  heroTitle         String
+  heroSubtitle      String
+  painPoints        String[]
+  benefits          String[]
+  ctaLabel          String
+  formFields        String[]
+  sections          Json?
+  metadata          Json?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  workspace         Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  product           Product?             @relation(fields: [productId], references: [id], onDelete: SetNull)
+  trackingLinks     TrackingLink[]
+  leads             Lead[]
+
+  @@unique([workspaceId, slug, variantKey])
+  @@map("landing_pages")
+}
+
+model MessageTemplate {
+  id                String               @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  templateKey       String
+  channel           FollowUpChannel
+  name              String
+  subject           String?
+  body              String
+  triggerEvent      String
+  delayMinutes      Int                  @default(0)
+  isActive          Boolean              @default(true)
+  metadata          Json?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  workspace         Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  followUpLogs      FollowUpLog[]
+
+  @@unique([workspaceId, templateKey])
+  @@map("message_templates")
+}
+
+model FollowUpLog {
+  id                String               @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String
+  messageTemplateId String?
+  channel           FollowUpChannel
+  status            String               @default("PENDING")
+  message           String
+  externalMessageId String?
+  sentAt            DateTime?
+  respondedAt       DateTime?
+  errorMessage      String?
+  metadata          Json?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  workspace         Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead                 @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  template          MessageTemplate?     @relation(fields: [messageTemplateId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, status])
+  @@map("follow_up_logs")
+}
+
+model Deal {
+  id                String               @id @default(cuid())
+  workspaceId       String
+  brandId           String?
+  leadId            String?              @unique
+  productId         String?
+  title             String
+  amount            Decimal?             @db.Decimal(14, 2)
+  currency          String               @default("TWD")
+  status            DealStatus           @default(NEW)
+  sourcePlatform    LeadSourcePlatform   @default(UNKNOWN)
+  stageOrder        Int                  @default(0)
+  notes             String?
+  metadata          Json?
+  closedAt          DateTime?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  workspace         Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  brand             Brand?               @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  lead              Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  product           Product?             @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, status])
+  @@map("deals")
+}
+
+model PlatformMetric {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  platform           PublishingPlatform
+  platformAccountId   String?
+  publishingJobId    String?
+  contentId          String?
+  videoId            String?
+  contentVariantId   String?
+  externalPostId     String?
+  publishedAt        DateTime?
+  collectedAt       DateTime          @default(now())
+  metricDate        DateTime
+  impressions       Int               @default(0)
+  views             Int               @default(0)
+  clicks            Int               @default(0)
+  likes             Int               @default(0)
+  comments          Int               @default(0)
+  shares            Int               @default(0)
+  saves             Int               @default(0)
+  completionRate    Float             @default(0)
+  followersGrowth   Int               @default(0)
+  source            String            @default("api")
+  raw               Json?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([workspaceId, metricDate])
+  @@index([platform, metricDate])
+  @@index([publishingJobId])
+  @@map("platform_metrics")
+}
+
+model ContentPerformance {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  contentId          String?
+  videoId            String?
+  publishingJobId    String?
+  platform           PublishingPlatform?
+  titleCtr           Float             @default(0)
+  hookRetention      Float             @default(0)
+  completionRate     Float             @default(0)
+  engagementRate     Float             @default(0)
+  ctaConversionRate  Float             @default(0)
+  bestHook           String?
+  bestCta            String?
+  bestLengthSeconds  Int?
+  bestPublishHour    Int?
+  bestTone           String?
+  bestStyle          String?
+  winningKeywords    String[]
+  insights           Json?
+  score              Float             @default(0)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@index([workspaceId, score])
+  @@index([contentId])
+  @@map("content_performance")
+}
+
+model DailyReport {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  reportDate         DateTime
+  metricsSummary     Json
+  insights           Json
+  generatedBy        String            @default("system")
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@unique([workspaceId, brandId, reportDate])
+  @@index([reportDate])
+  @@map("daily_reports")
+}
+
+model TrendingTopic {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  topic              String
+  score              Float             @default(0)
+  sourcePlatforms    String[]
+  evidence           Json?
+  firstSeenAt        DateTime          @default(now())
+  lastSeenAt         DateTime          @default(now())
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@index([workspaceId, score])
+  @@index([topic])
+  @@map("trending_topics")
+}
+
+model OptimizationRule {
+  id                 String                  @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  ruleKey            String
+  targetModule       OptimizationTargetModule
+  ruleType           OptimizationRuleType
+  description        String
+  score              Float                   @default(0)
+  confidence         Float                   @default(0)
+  active             Boolean                 @default(true)
+  payload            Json?
+  createdFromReportId String?
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+
+  @@unique([workspaceId, ruleKey])
+  @@index([workspaceId, targetModule, active])
+  @@map("optimization_rules")
+}
+
+model OptimizationLog {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  ruleId             String?
+  sourceModule       String
+  action             String
+  decision           Json?
+  createdAt          DateTime          @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@map("optimization_logs")
+}
+
+model AbTest {
+  id                 String            @id @default(cuid())
+  workspaceId        String?
+  brandId            String?
+  contentId          String?
+  videoId            String?
+  testType           String
+  hypothesis         String
+  status             AbTestStatus      @default(DRAFT)
+  metricName         String
+  startedAt          DateTime          @default(now())
+  endedAt            DateTime?
+  winnerVariantKey   String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  results            AbTestResult[]
+
+  @@index([workspaceId, status])
+  @@map("ab_tests")
+}
+
+model AbTestResult {
+  id                 String            @id @default(cuid())
+  abTestId           String
+  variantKey         String
+  variantLabel       String?
+  impressions        Int               @default(0)
+  views              Int               @default(0)
+  clicks             Int               @default(0)
+  likes              Int               @default(0)
+  comments           Int               @default(0)
+  shares             Int               @default(0)
+  saves              Int               @default(0)
+  completionRate     Float             @default(0)
+  score              Float             @default(0)
+  isWinner           Boolean           @default(false)
+  raw                Json?
+  recordedAt         DateTime          @default(now())
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  test               AbTest            @relation(fields: [abTestId], references: [id], onDelete: Cascade)
+
+  @@index([abTestId, score])
+  @@map("ab_test_results")
+}

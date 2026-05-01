@@ -1,0 +1,10 @@
+{
+  "name": "@ai-vidio/ui",
+  "private": true,
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

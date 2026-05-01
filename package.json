@@ -1,0 +1,19 @@
+{
+  "name": "ai-vidio",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm --workspace @ai-vidio/api run start:dev",
+    "dev:web": "npm --workspace @ai-vidio/web run dev",
+    "dev:admin": "npm --workspace @ai-vidio/admin-dashboard run dev",
+    "dev:all": "powershell -ExecutionPolicy Bypass -File .\\scripts\\start-all.ps1",
+    "build:api": "npm --workspace @ai-vidio/api run build",
+    "build:web": "npm --workspace @ai-vidio/web run build",
+    "build:admin": "npm --workspace @ai-vidio/admin-dashboard run build",
+    "build": "npm run build:api && npm run build:web && npm run build:admin",
+    "prisma:generate": "npm --workspace @ai-vidio/api run prisma:generate"
+  }
+}

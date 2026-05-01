@@ -6,4 +6,7 @@ dist
 .DS_Store
 coverage
 *.log
-
+.tools/
+apps/api/storage/
+!.tools/.gitkeep
+!apps/api/storage/.gitkeep

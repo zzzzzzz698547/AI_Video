@@ -410,6 +410,200 @@ NEXT_PUBLIC_API_BASE_URL
   - `FB_REDIRECT_URI`
   - Meta / Google OAuth callback
 
+## Railway 部署 API
+
+如果你想把後端改部署到 Railway，repo 根目錄已經附上 [railway.json](C:/Users/user/Desktop/AI-VIDIO/railway.json)。
+
+### Railway 建議部署方式
+
+- `apps/web`：維持部署在 Vercel
+- `apps/admin-dashboard`：維持部署在 Vercel
+- `apps/api`：部署到 Railway
+- PostgreSQL：建立 Railway Postgres 服務並把 `DATABASE_URL` 掛進 API
+
+### Railway 匯入步驟
+
+1. 在 Railway 建立新專案
+2. 選 `Deploy from GitHub repo`
+3. 選擇：
+   - [AI_Video](https://github.com/zzzzzzz698547/AI_Video)
+4. Railway 會自動讀到根目錄的 `railway.json`
+5. 先完成 API 服務建立
+6. 再在同一個 Railway 專案中新增 `PostgreSQL`
+7. 把 PostgreSQL 產生的 `DATABASE_URL` 掛到 API 服務
+
+### Railway API 會使用的設定
+
+- Build:
+
+```txt
+npm install && npm run prisma:generate && npm run build:api
+```
+
+- Pre-deploy:
+
+```txt
+npm --workspace @ai-vidio/api run db:push
+```
+
+- Start:
+
+```txt
+npm --workspace @ai-vidio/api run start
+```
+
+- Health check:
+
+```txt
+/health
+```
+
+### Railway 需要手動補的環境變數
+
+至少請補：
+
+- `DATABASE_URL`
+- `TOKEN_ENCRYPTION_KEY`
+- `NEXT_PUBLIC_API_BASE_URL`
+- `APP_BASE_URL`
+- `WEB_BASE_URL`
+- `NEXT_PUBLIC_WEB_BASE_URL`
+- `CORS_ORIGIN`
+- `FB_REDIRECT_URI`
+- `ADMIN_LOGIN_USERNAME`
+- `ADMIN_LOGIN_PASSWORD`
+- `ADMIN_LOGIN_DISPLAY_NAME`
+
+如果你要開 AI / OAuth / 社群：
+
+- `OPENAI_API_KEY`
+- `GEMINI_API_KEY`
+- `META_APP_ID`
+- `META_APP_SECRET`
+- `FB_APP_ID`
+- `FB_APP_SECRET`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `LINE_CHANNEL_ACCESS_TOKEN`
+- `LINE_CHANNEL_SECRET`
+
+### Railway 建立完成後要這樣回填
+
+假設 Railway 給你的 API 網址是：
+
+```txt
+https://ai-vidio-api-production.up.railway.app
+```
+
+請至少設定：
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://ai-vidio-api-production.up.railway.app
+APP_BASE_URL=https://ai-vidio-api-production.up.railway.app
+WEB_BASE_URL=https://ai-vidio-web.vercel.app
+NEXT_PUBLIC_WEB_BASE_URL=https://ai-vidio-web.vercel.app
+CORS_ORIGIN=https://ai-vidio-web.vercel.app,https://ai-vidio-admin.vercel.app,http://localhost:3000,http://localhost:3002
+FB_REDIRECT_URI=https://ai-vidio-api-production.up.railway.app/auth/facebook/callback
+ADMIN_LOGIN_USERNAME=你的管理員帳號
+ADMIN_LOGIN_PASSWORD=你的管理員密碼
+ADMIN_LOGIN_DISPLAY_NAME=System Admin
+```
+
+如果前端仍在 Vercel，建議同步確認：
+
+```txt
+CORS_ORIGIN=https://ai-vidio-web.vercel.app,https://ai-vidio-admin.vercel.app,http://localhost:3000,http://localhost:3002
+WEB_BASE_URL=https://ai-vidio-web.vercel.app
+NEXT_PUBLIC_WEB_BASE_URL=https://ai-vidio-web.vercel.app
+```
+
+### Vercel 也要同步更新
+
+前端部署到 Vercel 後，請把：
+
+```txt
+NEXT_PUBLIC_API_BASE_URL
+```
+
+改成 Railway API 網址，否則前台仍會打回本機或舊 tunnel。
+
+### 目前正式站對照
+
+- Web:
+  - `https://ai-vidio-web.vercel.app`
+- Admin:
+  - `https://ai-vidio-admin.vercel.app`
+- API:
+  - `https://ai-vidio-api-production.up.railway.app`
+
+建議 Vercel 與 Railway 直接使用這組值：
+
+#### Vercel Web
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://ai-vidio-api-production.up.railway.app
+NEXT_PUBLIC_ADMIN_BASE_URL=https://ai-vidio-admin.vercel.app
+```
+
+#### Vercel Admin
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://ai-vidio-api-production.up.railway.app
+NEXT_PUBLIC_ADMIN_BASE_URL=https://ai-vidio-admin.vercel.app
+```
+
+#### Railway API
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=https://ai-vidio-api-production.up.railway.app
+APP_BASE_URL=https://ai-vidio-api-production.up.railway.app
+WEB_BASE_URL=https://ai-vidio-web.vercel.app
+NEXT_PUBLIC_WEB_BASE_URL=https://ai-vidio-web.vercel.app
+CORS_ORIGIN=https://ai-vidio-web.vercel.app,https://ai-vidio-admin.vercel.app,http://localhost:3000,http://localhost:3002
+FB_REDIRECT_URI=https://ai-vidio-api-production.up.railway.app/auth/facebook/callback
+ADMIN_LOGIN_USERNAME=你的管理員帳號
+ADMIN_LOGIN_PASSWORD=你的管理員密碼
+ADMIN_LOGIN_DISPLAY_NAME=System Admin
+```
+
+#### Meta / Facebook Login
+
+`Valid OAuth Redirect URIs`
+
+```txt
+https://ai-vidio-api-production.up.railway.app/auth/facebook/callback
+https://ai-vidio-api-production.up.railway.app/integrations/callback/facebook
+https://ai-vidio-api-production.up.railway.app/integrations/callback/instagram
+https://ai-vidio-api-production.up.railway.app/integrations/callback/threads
+```
+
+#### Google OAuth
+
+`Authorized redirect URI`
+
+```txt
+https://ai-vidio-api-production.up.railway.app/integrations/callback/youtube
+```
+
+### Railway 部署後驗證
+
+請先確認：
+
+1. `https://your-railway-api/health` 可回應
+2. API 服務第一次 deploy 時 `db:push` 已成功
+3. Vercel 前端環境變數已改成 Railway API
+4. Meta / Google OAuth callback 已改成 Railway 正式網址
+
+### 注意
+
+- Railway 這次只負責 API，不會替你部署兩個 Next.js 前端
+- Redis 在這個專案是選配；沒填 `REDIS_URL` 時會走 fallback，不會阻止 API 啟動
+- 如果你之後換了 Railway 網址，記得同步更新：
+  - Vercel `NEXT_PUBLIC_API_BASE_URL`
+  - `APP_BASE_URL`
+  - `FB_REDIRECT_URI`
+  - Meta / Google OAuth callback
+
 ## 部署前提醒
 
 如果要從本機開發走到正式部署，建議至少先完成這些：

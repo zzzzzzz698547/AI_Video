@@ -11,7 +11,7 @@ import {
   updateTenantSession
 } from "../lib/tenant-session";
 
-const PUBLIC_PATHS = new Set(["/license-center", "/license-expired", "/renewal", "/meta/data-deletion"]);
+const PUBLIC_PATHS = new Set(["/license-center", "/license-expired", "/renewal", "/meta/data-deletion", "/login"]);
 
 type TenantLicenseStatus = {
   tenantId: string;

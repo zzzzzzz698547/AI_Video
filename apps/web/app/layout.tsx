@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./globals.css";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
+import { AdminModeBanner } from "../components/admin-mode-banner";
 import { TenantGate } from "../components/tenant-gate";
 
 const manrope = Manrope({ subsets: ["latin", "cyrillic"], variable: "--font-manrope" });
@@ -45,7 +46,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <span>Local first · NestJS + Prisma + Next.js</span>
               </div>
             </aside>
-            <main className="workspace">{children}</main>
+            <main className="workspace">
+              <AdminModeBanner />
+              {children}
+            </main>
           </div>
         </TenantGate>
       </body>

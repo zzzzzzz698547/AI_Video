@@ -2,20 +2,28 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { isAdminSessionExpired, readAdminSession, type AdminSession } from "../lib/admin-session";
 import { isTenantSessionExpired, readTenantSession, type TenantSession } from "../lib/tenant-session";
 
-const PUBLIC_PATHS = new Set(["/license-center"]);
+const PUBLIC_PATHS = new Set(["/license-center", "/login"]);
 
 export function TenantGate({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [session, setSession] = useState<TenantSession | null | undefined>(undefined);
+  const [adminSession, setAdminSession] = useState<AdminSession | null | undefined>(undefined);
 
   useEffect(() => {
     const nextSession = readTenantSession();
+    const nextAdminSession = readAdminSession();
     setSession(nextSession);
+    setAdminSession(nextAdminSession);
 
     if (PUBLIC_PATHS.has(pathname)) {
+      return;
+    }
+
+    if (nextAdminSession && !isAdminSessionExpired(nextAdminSession)) {
       return;
     }
 
@@ -28,7 +36,7 @@ export function TenantGate({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  if (session === undefined) {
+  if (session === undefined || adminSession === undefined) {
     return (
       <div className="workspace-guard">
         <div className="workspace-guard-card">
@@ -37,6 +45,10 @@ export function TenantGate({ children }: { children: React.ReactNode }) {
         </div>
       </div>
     );
+  }
+
+  if (adminSession && !isAdminSessionExpired(adminSession)) {
+    return <>{children}</>;
   }
 
   if (!session || isTenantSessionExpired(session)) {

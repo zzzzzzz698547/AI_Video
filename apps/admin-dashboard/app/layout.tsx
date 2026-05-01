@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import type { ReactNode } from "react";
+import { AdminSessionBar } from "../components/admin-session-bar";
 import { TenantGate } from "../components/tenant-gate";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <aside className="sidebar">
             <div className="brand">AI-VIDIO</div>
             <nav className="nav">
+              <Link href="/login">管理員登入</Link>
               <Link href="/license-center">授權中心</Link>
               <Link href="/">核心架構</Link>
               <Link href="/integrations">社群綁定</Link>
@@ -30,6 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </nav>
           </aside>
           <main className="content">
+            <AdminSessionBar />
             <TenantGate>{children}</TenantGate>
           </main>
         </div>

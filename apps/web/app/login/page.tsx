@@ -80,12 +80,12 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <form className="stack" onSubmit={handleSubmit}>
-            <div className="form-grid">
-              <label className="field">
-                <span className="label">帳號</span>
+          <form className="stack admin-login-form" onSubmit={handleSubmit}>
+            <div className="admin-login-grid">
+              <label className="admin-login-field">
+                <span className="admin-login-label">帳號</span>
                 <input
-                  className="input"
+                  className="input admin-login-input"
                   value={form.username}
                   onChange={(event) => setForm((current) => ({ ...current, username: event.target.value }))}
                   placeholder="管理員帳號"
@@ -94,10 +94,10 @@ export default function LoginPage() {
                 />
               </label>
 
-              <label className="field">
-                <span className="label">密碼</span>
+              <label className="admin-login-field">
+                <span className="admin-login-label">密碼</span>
                 <input
-                  className="input"
+                  className="input admin-login-input"
                   type="password"
                   value={form.password}
                   onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
@@ -108,7 +108,7 @@ export default function LoginPage() {
               </label>
             </div>
 
-            <div className="toolbar">
+            <div className="toolbar admin-login-toolbar">
               <button className="btn" type="submit" disabled={loading}>
                 {loading ? "登入中..." : "前往後台"}
               </button>

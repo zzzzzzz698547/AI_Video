@@ -1343,6 +1343,37 @@ select.select optgroup {
   font-size: clamp(1.9rem, 3vw, 2.6rem);
 }
 
+.admin-login-form {
+  gap: 18px;
+}
+
+.admin-login-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-login-field {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.admin-login-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.admin-login-input {
+  min-height: 52px;
+}
+
+.admin-login-toolbar {
+  justify-content: flex-start;
+}
+
 .license-summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1378,6 +1409,10 @@ select.select optgroup {
   }
 
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-login-grid {
     grid-template-columns: 1fr;
   }
 

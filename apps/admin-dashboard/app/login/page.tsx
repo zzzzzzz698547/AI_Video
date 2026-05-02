@@ -154,12 +154,12 @@ export default function AdminLoginPage() {
           {verifying ? (
             <div className="form-alert success">正在確認管理員登入憑證，稍後自動帶你進後台。</div>
           ) : (
-            <form className="stack" onSubmit={handleSubmit}>
-              <div className="form-grid">
-                <label className="field">
-                  <span className="label">帳號</span>
+            <form className="stack admin-login-form" onSubmit={handleSubmit}>
+              <div className="admin-login-grid">
+                <label className="admin-login-field">
+                  <span className="admin-login-label">帳號</span>
                   <input
-                    className="input"
+                    className="input admin-login-input"
                     value={form.username}
                     onChange={(event) => setForm((current) => ({ ...current, username: event.target.value }))}
                     placeholder="管理員帳號"
@@ -168,10 +168,10 @@ export default function AdminLoginPage() {
                   />
                 </label>
 
-                <label className="field">
-                  <span className="label">密碼</span>
+                <label className="admin-login-field">
+                  <span className="admin-login-label">密碼</span>
                   <input
-                    className="input"
+                    className="input admin-login-input"
                     type="password"
                     value={form.password}
                     onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
@@ -182,7 +182,7 @@ export default function AdminLoginPage() {
                 </label>
               </div>
 
-              <div className="toolbar">
+              <div className="toolbar admin-login-toolbar">
                 <button className="action-button primary" type="submit" disabled={loading}>
                   {loading ? "登入中..." : "登入後台"}
                 </button>

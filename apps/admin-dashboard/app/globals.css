@@ -22,6 +22,37 @@ body {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
 }
 
+.admin-login-form {
+  gap: 18px;
+}
+
+.admin-login-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-login-field {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.admin-login-label {
+  display: block;
+  color: #b7c6e2;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.admin-login-input {
+  min-height: 52px;
+}
+
+.admin-login-toolbar {
+  justify-content: flex-start;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -834,6 +865,10 @@ a {
 }
 
 @media (max-width: 900px) {
+  .admin-login-grid {
+    grid-template-columns: 1fr;
+  }
+
   .admin-session-bar {
     flex-direction: column;
     align-items: flex-start;

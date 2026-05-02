@@ -16,14 +16,16 @@ export class AuthService {
   private static readonly SESSION_TTL_MS = 1000 * 60 * 60 * 12;
 
   loginAdmin(input: AdminLoginDto) {
-    const configuredUsername = process.env.ADMIN_LOGIN_USERNAME?.trim();
-    const configuredPassword = process.env.ADMIN_LOGIN_PASSWORD?.trim();
+    const configuredUsername = this.normalizeCredential(process.env.ADMIN_LOGIN_USERNAME);
+    const configuredPassword = this.normalizeCredential(process.env.ADMIN_LOGIN_PASSWORD);
+    const inputUsername = this.normalizeCredential(input.username);
+    const inputPassword = this.normalizeCredential(input.password);
 
     if (!configuredUsername || !configuredPassword) {
       throw new UnauthorizedException("管理員登入尚未設定，請先填入 ADMIN_LOGIN_USERNAME / ADMIN_LOGIN_PASSWORD");
     }
 
-    if (input.username.trim() !== configuredUsername || input.password !== configuredPassword) {
+    if (inputUsername !== configuredUsername || inputPassword !== configuredPassword) {
       throw new UnauthorizedException("帳號或密碼錯誤");
     }
 
@@ -109,5 +111,12 @@ export class AuthService {
 
   private toBase64Url(value: string) {
     return Buffer.from(value, "utf8").toString("base64url");
+  }
+
+  private normalizeCredential(value?: string) {
+    return (value ?? "")
+      .normalize("NFKC")
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .trim();
   }
 }

@@ -33,6 +33,14 @@ const defaultForm = {
   password: ""
 };
 
+function explainAdminLoginError(message: string) {
+  if (message.includes("帳號或密碼錯誤")) {
+    return "帳號或密碼錯誤。若你確認輸入的是本機可成功登入的那組帳密，請到 Railway 的 ai-vidio-api 檢查 ADMIN_LOGIN_USERNAME / ADMIN_LOGIN_PASSWORD 是否一致，並確認前後沒有多餘空白。";
+  }
+
+  return message;
+}
+
 export default function AdminLoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -133,7 +141,8 @@ export default function AdminLoginPage() {
 
       router.replace(nextPath);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "管理員登入失敗");
+      const message = err instanceof Error ? err.message : "管理員登入失敗";
+      setError(explainAdminLoginError(message));
     } finally {
       setLoading(false);
     }

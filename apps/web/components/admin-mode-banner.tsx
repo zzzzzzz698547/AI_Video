@@ -83,6 +83,11 @@ export function AdminModeBanner() {
         <p className="admin-mode-meta">
           目前前台已略過授權碼限制，還可使用 <strong>{remaining}</strong>。到期時間：{expiresLabel}
         </p>
+        <div className="admin-mode-pill-row">
+          <span className="admin-mode-pill">前台接管中</span>
+          <span className="admin-mode-pill">授權碼已略過</span>
+          <span className="admin-mode-pill">到期前剩餘 {remaining}</span>
+        </div>
       </div>
       <div className="admin-mode-actions">
         <span className="meta">SUPER ADMIN</span>

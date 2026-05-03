@@ -153,10 +153,22 @@ export default function AdminLoginPage() {
       <section className="panel license-panel">
         <div className="panel-inner">
           <div className="panel-header">
-            <div>
+            <div className="admin-login-copy">
               <p className="eyebrow">Admin Sign In</p>
               <h1 className="panel-title">管理員直接登入</h1>
               <p className="panel-desc">這條入口不吃授權碼，專門給系統管理員進後台維運、檢查綁定與排查問題。</p>
+              <div className="admin-login-note-grid">
+                <div className="admin-login-note-card">
+                  <span className="admin-login-note-label">登入範圍</span>
+                  <strong>後台維運與資料排查</strong>
+                  <p>登入後會直接接手社群綁定、客服中心、漏斗與分析模組。</p>
+                </div>
+                <div className="admin-login-note-card">
+                  <span className="admin-login-note-label">安全說明</span>
+                  <strong>不經授權碼，但仍有時效</strong>
+                  <p>登入憑證只會保存一段時間，到期後會要求再次登入。</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -196,6 +208,7 @@ export default function AdminLoginPage() {
                   {loading ? "登入中..." : "登入後台"}
                 </button>
                 <span className="badge">登入成功後會直接略過授權碼檢查</span>
+                <span className="admin-login-inline-chip">SUPER ADMIN</span>
               </div>
             </form>
           )}

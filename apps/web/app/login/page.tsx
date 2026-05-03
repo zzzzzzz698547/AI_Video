@@ -82,10 +82,22 @@ export default function LoginPage() {
       <section className="panel license-panel">
         <div className="panel-inner">
           <div className="panel-header">
-            <div>
+            <div className="admin-login-copy">
               <p className="eyebrow">Admin Sign In</p>
               <h1 className="panel-title">管理員登入入口</h1>
               <p className="panel-desc">管理員可直接用帳號密碼登入後台，不需要先輸入授權碼。一般客戶仍然維持授權中心啟用流程。</p>
+              <div className="admin-login-note-grid">
+                <div className="admin-login-note-card">
+                  <span className="admin-login-note-label">登入範圍</span>
+                  <strong>前台控制 + 後台接管</strong>
+                  <p>登入成功後，會直接把你帶到後台管理中心繼續操作。</p>
+                </div>
+                <div className="admin-login-note-card">
+                  <span className="admin-login-note-label">安全說明</span>
+                  <strong>不經授權碼，但仍有時效</strong>
+                  <p>登入憑證只會保存一段時間，到期後需要重新登入。</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -122,6 +134,7 @@ export default function LoginPage() {
                 {loading ? "登入中..." : "前往後台"}
               </button>
               <span className="status status-muted">登入成功後會自動跳到後台管理中心</span>
+              <span className="admin-login-inline-chip">SUPER ADMIN</span>
             </div>
           </form>
 

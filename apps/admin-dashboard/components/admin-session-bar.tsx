@@ -76,6 +76,11 @@ export function AdminSessionBar() {
         <p className="admin-session-meta">
           已記住登入狀態，還可使用 <strong>{remaining}</strong>。到期時間：{expiresLabel}
         </p>
+        <div className="admin-session-pill-row">
+          <span className="admin-session-pill">後台維運中</span>
+          <span className="admin-session-pill">授權碼檢查已略過</span>
+          <span className="admin-session-pill">到期前剩餘 {remaining}</span>
+        </div>
       </div>
       <div className="admin-session-actions">
         <span className="badge">SUPER ADMIN</span>

@@ -1,9 +1,15 @@
 # AI-VIDIO
 
-## 正式交付文件目錄
+## 正式交付封面與文件目錄
 
 **交付型態**  
 SaaS 多租戶 AI 影片生成與社群發布系統
+
+**版本資訊**  
+- 交付版本：`Production Handoff Pack`
+- 文件版本：`v1.0`
+- 整理日期：`2026-05-04`
+- Git Commit：`f694070`
 
 **正式環境**  
 - Web：[https://ai-vidio-web.vercel.app](https://ai-vidio-web.vercel.app)
@@ -11,7 +17,7 @@ SaaS 多租戶 AI 影片生成與社群發布系統
 - API：[https://ai-vidio-api-production.up.railway.app](https://ai-vidio-api-production.up.railway.app)
 
 **文件用途**  
-本文件可直接作為 Word / PDF 交付包首頁與目錄頁，協助客戶、維運人員與接手工程師快速理解交付範圍與後續驗收路徑。
+本文件可直接作為 Word / PDF 交付包首頁與目錄頁，協助客戶、維運人員與接手工程師快速理解交付範圍、正式網址、版本資訊與後續驗收路徑。
 
 ---
 

@@ -17,6 +17,7 @@
 
 - [客戶交付說明](C:/Users/user/Desktop/AI-VIDIO/docs/client/CLIENT-DELIVERY.md)
 - [交付文件目錄](C:/Users/user/Desktop/AI-VIDIO/docs/client/DELIVERY-DIRECTORY.md)
+- [交付主文件](C:/Users/user/Desktop/AI-VIDIO/docs/client/MASTER-DELIVERY-PACK.md)
 
 ## 建議使用方式
 
@@ -35,3 +36,4 @@
 
 1. [客戶交付說明](C:/Users/user/Desktop/AI-VIDIO/docs/client/CLIENT-DELIVERY.md)
 2. [交付文件目錄](C:/Users/user/Desktop/AI-VIDIO/docs/client/DELIVERY-DIRECTORY.md)
+3. [交付主文件](C:/Users/user/Desktop/AI-VIDIO/docs/client/MASTER-DELIVERY-PACK.md)

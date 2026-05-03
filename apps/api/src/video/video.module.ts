@@ -10,6 +10,7 @@ import { OpenAiImageGenerationService } from "./providers/openai-image-generatio
 import { GeminiImageGenerationService } from "./providers/gemini-image-generation.service";
 import { AiModule } from "../core/ai/ai.module";
 import { ContentModule } from "../content/content.module";
+import { ObjectStorageService } from "../shared/object-storage.service";
 
 @Module({
   imports: [AiModule, ContentModule],
@@ -20,6 +21,7 @@ import { ContentModule } from "../content/content.module";
     VideoRenderService,
     SystemSpeechTtsService,
     VideoMediaService,
+    ObjectStorageService,
     WikimediaMediaLibraryService,
     OpenAiImageGenerationService,
     GeminiImageGenerationService

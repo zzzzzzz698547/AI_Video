@@ -11,6 +11,8 @@ import { PublishingModule } from "./publishing/publishing.module";
 import { SocialModule } from "./social/social.module";
 import { VideoModule } from "./video/video.module";
 import { AppController } from "./app.controller";
+import { ObjectStorageService } from "./shared/object-storage.service";
+import { OperationsAlertService } from "./shared/operations-alert.service";
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { AppController } from "./app.controller";
     ChatModule,
     UrlAnalysisModule
   ],
-  controllers: [AppController]
+  controllers: [AppController],
+  providers: [ObjectStorageService, OperationsAlertService]
 })
 export class AppModule {}

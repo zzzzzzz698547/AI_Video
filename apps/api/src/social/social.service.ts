@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import {
   Prisma,
@@ -12,6 +12,7 @@ import {
 import { CurrentTenantPayload } from "../core/tenancy/current-tenant.decorator";
 import { TenancyService } from "../core/tenancy/tenancy.service";
 import { PrismaService } from "../prisma/prisma.service";
+import { OperationsAlertService } from "../shared/operations-alert.service";
 import { TokenEncryptionService } from "../shared/token-encryption.service";
 import { CreateSocialPublishJobDto } from "./dto/create-social-publish-job.dto";
 
@@ -29,10 +30,13 @@ type PublishResult = {
 
 @Injectable()
 export class SocialService {
+  private readonly logger = new Logger(SocialService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly tenancyService: TenancyService,
-    private readonly tokenEncryption: TokenEncryptionService
+    private readonly tokenEncryption: TokenEncryptionService,
+    private readonly operationsAlert: OperationsAlertService
   ) {}
 
   async listAdapters(tenantId: string) {
@@ -214,6 +218,13 @@ export class SocialService {
           errorMessage: message
         }
       });
+      await this.operationsAlert.notifyPublishingFailure({
+        tenantId: job.tenantId,
+        socialPublishJobId: job.id,
+        platform: job.platform,
+        adapterId: job.adapterId,
+        errorMessage: message
+      });
     }
 
     return this.getPublishJobDetail(jobId);
@@ -390,6 +401,61 @@ export class SocialService {
         data: { status: SocialPublishJobStatus.PUBLISHING }
       });
       await this.publishJobNow(job.id);
+    }
+  }
+
+  @Cron(CronExpression.EVERY_6_HOURS)
+  async monitorAdapterExpiry() {
+    const now = new Date();
+    const alertWindowHours = Number.parseInt((process.env.SOCIAL_TOKEN_EXPIRY_ALERT_HOURS ?? "72").trim(), 10);
+    const safeAlertWindowHours = Number.isFinite(alertWindowHours) && alertWindowHours > 0 ? alertWindowHours : 72;
+    const alertThreshold = new Date(now.getTime() + safeAlertWindowHours * 60 * 60 * 1000);
+
+    const expiredResult = await this.prisma.socialAdapter.updateMany({
+      where: {
+        status: SocialAdapterStatus.ACTIVE,
+        tokenExpiresAt: {
+          lt: now
+        }
+      },
+      data: {
+        status: SocialAdapterStatus.EXPIRED
+      }
+    });
+
+    if (expiredResult.count > 0) {
+      this.logger.warn(`Marked ${expiredResult.count} social adapters as EXPIRED due to token expiration`);
+    }
+
+    const expiringAdapters = await this.prisma.socialAdapter.findMany({
+      where: {
+        status: SocialAdapterStatus.ACTIVE,
+        tokenExpiresAt: {
+          gte: now,
+          lte: alertThreshold
+        }
+      },
+      orderBy: {
+        tokenExpiresAt: "asc"
+      },
+      take: 50
+    });
+
+    for (const adapter of expiringAdapters) {
+      if (!adapter.tokenExpiresAt) {
+        continue;
+      }
+
+      const hoursRemaining = Math.max(0, Math.ceil((adapter.tokenExpiresAt.getTime() - now.getTime()) / (60 * 60 * 1000)));
+      await this.operationsAlert.notifyTokenExpiring({
+        tenantId: adapter.tenantId,
+        adapterId: adapter.id,
+        platform: adapter.platform,
+        accountName: adapter.accountName,
+        displayName: adapter.displayName,
+        tokenExpiresAt: adapter.tokenExpiresAt,
+        hoursRemaining
+      });
     }
   }
 

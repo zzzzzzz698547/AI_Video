@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ScheduleModule } from "@nestjs/schedule";
+import { OperationsAlertService } from "../shared/operations-alert.service";
 import { TokenEncryptionService } from "../shared/token-encryption.service";
 import { FacebookAdapter } from "./facebook.adapter";
 import { InstagramAdapter } from "./instagram.adapter";
@@ -19,6 +20,7 @@ import { YouTubeAdapter } from "./youtube.adapter";
     PublishingQueueService,
     PublishingProcessorService,
     PublishingCronService,
+    OperationsAlertService,
     TokenEncryptionService,
     FacebookAdapter,
     InstagramAdapter,

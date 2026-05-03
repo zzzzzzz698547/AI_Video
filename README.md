@@ -575,6 +575,27 @@ FB_REDIRECT_URI=https://ai-vidio-api-production.up.railway.app/auth/facebook/cal
 ADMIN_LOGIN_USERNAME=你的管理員帳號
 ADMIN_LOGIN_PASSWORD=你的管理員密碼
 ADMIN_LOGIN_DISPLAY_NAME=System Admin
+OBJECT_STORAGE_BUCKET=你的 bucket 名稱
+OBJECT_STORAGE_REGION=auto
+OBJECT_STORAGE_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+OBJECT_STORAGE_ACCESS_KEY_ID=你的 access key
+OBJECT_STORAGE_SECRET_ACCESS_KEY=你的 secret key
+OBJECT_STORAGE_PUBLIC_BASE_URL=https://cdn.your-domain.com
+OBJECT_STORAGE_PREFIX=videos
+REQUIRE_OBJECT_STORAGE_IN_PRODUCTION=true
+OPERATIONS_ALERT_WEBHOOK_URL=https://your-alert-webhook.example.com
+SOCIAL_TOKEN_EXPIRY_ALERT_HOURS=72
+```
+
+如果你要快速驗證「生成影片 → publicUrl → 社群發布」整條鏈，可直接使用：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\smoke_social_publish.ps1 `
+  -ApiBaseUrl "https://ai-vidio-api-production.up.railway.app" `
+  -AuthToken "<user-session-token>" `
+  -TenantId "<tenant-id>" `
+  -AnalysisId "<analysis-id>" `
+  -AdapterId "<facebook-adapter-id>"
 ```
 
 #### Meta / Facebook Login

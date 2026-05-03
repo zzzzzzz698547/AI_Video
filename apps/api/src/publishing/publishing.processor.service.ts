@@ -8,6 +8,7 @@ import {
 import { Prisma } from "@prisma/client";
 import { TenancyService } from "../core/tenancy/tenancy.service";
 import { PrismaService } from "../prisma/prisma.service";
+import { OperationsAlertService } from "../shared/operations-alert.service";
 import { TokenEncryptionService } from "../shared/token-encryption.service";
 import { FacebookAdapter } from "./facebook.adapter";
 import { InstagramAdapter } from "./instagram.adapter";
@@ -32,6 +33,7 @@ export class PublishingProcessorService {
     private readonly prisma: PrismaService,
     private readonly tokenEncryption: TokenEncryptionService,
     private readonly tenancyService: TenancyService,
+    private readonly operationsAlert: OperationsAlertService,
     private readonly facebookAdapter: FacebookAdapter,
     private readonly instagramAdapter: InstagramAdapter,
     private readonly threadsAdapter: ThreadsAdapter,
@@ -73,7 +75,7 @@ export class PublishingProcessorService {
     for (const platform of job.platforms) {
       try {
         const adapter = this.adapterFor(platform);
-        const account = await this.ensureAccount(platform);
+        const account = await this.ensureAccount(platform, job.tenantId ?? null);
         await adapter.connectAccount(account.id);
         await adapter.refreshToken(account.id);
 
@@ -139,6 +141,12 @@ export class PublishingProcessorService {
         });
         results.push({ platform, ok: false, error: message });
         this.logger.warn(`Publish failed on ${platform}: ${message}`);
+        await this.operationsAlert.notifyPublishingFailure({
+          tenantId: job.tenantId ?? null,
+          publishingJobId,
+          platform,
+          errorMessage: message
+        });
       }
     }
 
@@ -277,31 +285,6 @@ export class PublishingProcessorService {
     await adapter.refreshToken(accountId);
   }
 
-  async createPlatformAccount(platform: PublishingPlatform, accountName: string) {
-    const account = await this.prisma.platformAccount.create({
-      data: {
-        platform,
-        accountName,
-        displayName: accountName,
-        isActive: true
-      }
-    });
-
-    await this.prisma.platformToken.create({
-      data: {
-        platformAccountId: account.id,
-        accessTokenEncrypted: this.tokenEncryption.encrypt(`mock-access-${platform}-${account.id}`),
-        refreshTokenEncrypted: this.tokenEncryption.encrypt(`mock-refresh-${platform}-${account.id}`),
-        scopes: ["publish", "read"],
-        metadata: {
-          provider: "mock"
-        } as Prisma.InputJsonValue
-      }
-    });
-
-    return account;
-  }
-
   private adapterFor(platform: PublishingPlatform): PlatformAdapter {
     switch (platform) {
       case PublishingPlatform.FACEBOOK:
@@ -317,20 +300,39 @@ export class PublishingProcessorService {
     }
   }
 
-  private async ensureAccount(platform: PublishingPlatform) {
+  private async ensureAccount(platform: PublishingPlatform, tenantId?: string | null) {
     const existing = await this.prisma.platformAccount.findFirst({
       where: {
         platform,
-        isActive: true
+        isActive: true,
+        tenantId: tenantId ?? undefined
+      },
+      include: {
+        token: true
       },
       orderBy: { createdAt: "asc" }
     });
 
-    if (existing) {
-      return existing;
+    if (!existing) {
+      throw new NotFoundException(`找不到可用的 ${platform} 發布帳號，請先完成真實社群綁定`);
     }
 
-    return this.createPlatformAccount(platform, `${platform.toLowerCase()}-default`);
+    if (!existing.token) {
+      throw new NotFoundException(`找不到 ${platform} 的有效權杖，請重新綁定社群帳號`);
+    }
+
+    const metadata =
+      existing.token.metadata && typeof existing.token.metadata === "object"
+        ? (existing.token.metadata as Record<string, unknown>)
+        : null;
+    const provider = typeof metadata?.provider === "string" ? metadata.provider.toLowerCase() : "";
+    const accessToken = this.tokenEncryption.decrypt(existing.token.accessTokenEncrypted);
+
+    if (provider === "mock" || accessToken.startsWith("mock-")) {
+      throw new NotFoundException(`偵測到 ${platform} 使用的是測試權杖，正式發布已停用 mock 帳號`);
+    }
+
+    return existing;
   }
 
   private async validateMediaOrThrow(job: PublishingJobWithRelations, platform: PublishingPlatform) {

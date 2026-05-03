@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { ContentStyle, ContentVariantType, MediaAssetType, MediaSourceType, VideoMediaMode, VideoSegmentType, VideoStatus, VideoStyle } from "@prisma/client";
 import { Prisma } from "@prisma/client";
+import { stat } from "node:fs/promises";
 import { ContentGeneratorService } from "../content/content-generator.service";
 import { GenerateContentInput } from "../content/content.types";
 import { TenancyService } from "../core/tenancy/tenancy.service";
 import { PrismaService } from "../prisma/prisma.service";
+import { ObjectStorageService } from "../shared/object-storage.service";
 import { CreateVideoProjectDto } from "./video.dto";
 import { ScriptSegment, VideoGenerationResult, VideoProjectDetail } from "./video.types";
 import { clipText } from "./video.utils";
@@ -45,7 +47,8 @@ export class VideoGeneratorService {
     private readonly tenancyService: TenancyService,
     private readonly renderer: VideoRenderService,
     private readonly tts: SystemSpeechTtsService,
-    private readonly mediaService: VideoMediaService
+    private readonly mediaService: VideoMediaService,
+    private readonly objectStorage: ObjectStorageService
   ) {}
 
   async generateVideo(dto: CreateVideoProjectDto): Promise<VideoGenerationResult> {
@@ -102,13 +105,26 @@ export class VideoGeneratorService {
       sceneAssets: preparedAssets
     });
 
+    const uploadedVideo = await this.objectStorage.uploadPublicVideo({
+      tenantId,
+      projectId: project.id,
+      localPath: rendered.videoPath,
+      outputFormat: "mp4"
+    });
+    if (!uploadedVideo && this.isProduction() && this.objectStorage.requireInProduction()) {
+      throw new InternalServerErrorException(
+        "Production 環境已要求 object storage，但目前沒有成功上傳影片。請確認 OBJECT_STORAGE_* 設定。"
+      );
+    }
+    const fileStats = await stat(rendered.videoPath);
+
     const output = await this.prisma.videoOutput.create({
       data: {
         tenantId,
         videoProjectId: project.id,
         filePath: rendered.videoPath,
-        publicUrl: `/video/${project.id}/file`,
-        fileSizeBytes: BigInt(0),
+        publicUrl: uploadedVideo?.publicUrl ?? this.resolvePublicVideoUrl(project.id),
+        fileSizeBytes: uploadedVideo?.fileSizeBytes ?? BigInt(fileStats.size),
         width: 1080,
         height: 1920,
         durationSeconds: dto.targetDurationSeconds,
@@ -373,6 +389,36 @@ export class VideoGeneratorService {
             status: project.output.status
           }
         : null
+      };
+    }
+
+  async getPublicVideoOutput(id: string) {
+    const project = await this.prisma.videoProject.findUnique({
+      where: { id },
+      include: {
+        output: true
+      }
+    });
+
+    if (!project) {
+      throw new NotFoundException("找不到影片專案");
+    }
+
+    return {
+      id: project.id,
+      status: project.status,
+      output: project.output
+        ? {
+            id: project.output.id,
+            filePath: project.output.filePath,
+            publicUrl: project.output.publicUrl,
+            width: project.output.width,
+            height: project.output.height,
+            durationSeconds: project.output.durationSeconds,
+            outputFormat: project.output.outputFormat,
+            status: project.output.status
+          }
+        : null
     };
   }
 
@@ -539,5 +585,68 @@ export class VideoGeneratorService {
     await this.prisma.videoAsset.createMany({
       data: assetRows
     });
+  }
+
+  private resolvePublicVideoUrl(projectId: string) {
+    const publicPath = `/public/video/${projectId}/file`;
+    const urlTemplate = this.resolveEnv(
+      process.env.VIDEO_PUBLIC_URL_TEMPLATE,
+      process.env.PUBLIC_VIDEO_URL_TEMPLATE
+    );
+    const appBaseUrl = this.resolveEnv(
+      process.env.VIDEO_PUBLIC_BASE_URL,
+      process.env.PUBLIC_ASSET_BASE_URL,
+      process.env.APP_BASE_URL
+    );
+
+    if (urlTemplate) {
+      const resolvedFromTemplate = urlTemplate
+        .replaceAll("{id}", projectId)
+        .replaceAll("{path}", publicPath);
+
+      return this.assertPublicVideoUrl(resolvedFromTemplate);
+    }
+
+    if (!appBaseUrl) {
+      if (this.isProduction()) {
+        throw new InternalServerErrorException(
+          "尚未設定影片公開網址配置。Production 環境請至少提供 VIDEO_PUBLIC_URL_TEMPLATE、VIDEO_PUBLIC_BASE_URL、PUBLIC_ASSET_BASE_URL 或 APP_BASE_URL"
+        );
+      }
+
+      return publicPath;
+    }
+
+    return this.assertPublicVideoUrl(`${appBaseUrl.replace(/\/+$/, "")}${publicPath}`);
+  }
+
+  private assertPublicVideoUrl(value: string) {
+    let parsed: URL;
+    try {
+      parsed = new URL(value);
+    } catch {
+      throw new InternalServerErrorException("影片公開網址設定格式不正確，無法產生正式可發布的 publicUrl");
+    }
+
+    if (this.isProduction() && parsed.protocol !== "https:") {
+      throw new InternalServerErrorException("Production 環境的影片公開網址必須使用 HTTPS");
+    }
+
+    return parsed.toString();
+  }
+
+  private resolveEnv(...values: Array<string | undefined | null>) {
+    for (const value of values) {
+      const normalized = (value ?? "").trim();
+      if (normalized) {
+        return normalized;
+      }
+    }
+
+    return "";
+  }
+
+  private isProduction() {
+    return (process.env.NODE_ENV ?? "development").toLowerCase() === "production";
   }
 }

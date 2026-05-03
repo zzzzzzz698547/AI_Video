@@ -1,60 +1,80 @@
-# AI-VIDIO 交付文件目錄
+# AI-VIDIO
 
-這份文件可直接作為 Word / PDF 交付包的目錄頁。
+## 正式交付文件目錄
 
-## A. 系統交付資訊
+**交付型態**  
+SaaS 多租戶 AI 影片生成與社群發布系統
 
-- 專案名稱：AI-VIDIO
-- 交付型態：SaaS 多租戶 AI 影片與社群發布系統
-- 正式前台：[https://ai-vidio-web.vercel.app](https://ai-vidio-web.vercel.app)
-- 正式後台：[https://ai-vidio-admin.vercel.app](https://ai-vidio-admin.vercel.app)
-- 正式 API：[https://ai-vidio-api-production.up.railway.app](https://ai-vidio-api-production.up.railway.app)
+**正式環境**  
+- Web：[https://ai-vidio-web.vercel.app](https://ai-vidio-web.vercel.app)
+- Admin：[https://ai-vidio-admin.vercel.app](https://ai-vidio-admin.vercel.app)
+- API：[https://ai-vidio-api-production.up.railway.app](https://ai-vidio-api-production.up.railway.app)
 
-## B. 本次交付文件
+**文件用途**  
+本文件可直接作為 Word / PDF 交付包首頁與目錄頁，協助客戶、維運人員與接手工程師快速理解交付範圍與後續驗收路徑。
 
-### 1. 客戶交付說明
+---
+
+## 1. 交付文件清單
+
+### 1.1 客戶交付說明
 - 檔案：`CLIENT-DELIVERY.md`
-- 用途：提供客戶端功能概述、網址、驗收建議與注意事項
+- 用途：提供客戶端功能概述、正式網址、驗收建議與交付注意事項
 
-### 2. 交付清單
+### 1.2 交付清單
 - 檔案：`DELIVERY-CHECKLIST.md`
-- 用途：快速核對交付範圍、部署與驗收項目
+- 用途：快速核對交付範圍、部署完成項目與驗收入口
 
-### 3. 技術交接說明
+### 1.3 技術交接說明
 - 檔案：`HANDOFF-GUIDE.md`
 - 用途：提供接手工程師或維運人員的完整交接資訊
 
-### 4. 營運 SOP
+### 1.4 營運 SOP
 - 檔案：`OPERATIONS-SOP.md`
 - 用途：內部維運、日常檢查、發版與故障排查流程
 
-## C. 建議 Word / PDF 輸出順序
+### 1.5 最終上線檢查表
+- 檔案：`FINAL-LAUNCH-CHECKLIST.md`
+- 用途：正式切換或再次部署前，逐項確認正式環境、第三方平台與驗收流程
 
-如果要整理成一份正式交付文件，建議順序如下：
+---
+
+## 2. 建議交付閱讀順序
+
+若要整理成一份正式交付資料，建議順序如下：
 
 1. 本頁：交付文件目錄
 2. 客戶交付說明
 3. 交付清單
 4. 技術交接說明
 5. 營運 SOP
+6. 最終上線檢查表
 
-## D. 驗收建議頁面
+---
 
-### 前台
+## 3. 驗收建議入口
+
+### 3.1 前台
 - `/login`
 - `/license-center`
 - `/url-analysis`
 - `/video-studio`
 - `/publishing-center`
 
-### 後台
+### 3.2 後台
 - `/login`
 - `/integrations`
 
-### API
+### 3.3 API
 - `/health`
 
-## E. 備註
+---
 
-- 若要正式轉成 Word 或 PDF，可優先以這份目錄作為首頁
-- 對外版本建議隱去敏感環境變數與管理員帳密
+## 4. 交付備註
+
+- 對外版文件建議不要直接附上敏感環境變數、管理員帳密與第三方 API key。
+- 若要轉為 Word 或 PDF，本頁建議作為首頁或目錄頁使用。
+- 若後續還要交接給技術維運，請一併附上：
+  - `HANDOFF-GUIDE.md`
+  - `OPERATIONS-SOP.md`
+  - `FINAL-LAUNCH-CHECKLIST.md`

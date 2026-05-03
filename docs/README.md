@@ -10,6 +10,7 @@
 - [交付清單](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/DELIVERY-CHECKLIST.md)
 - [完整交接說明](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/HANDOFF-GUIDE.md)
 - [營運 SOP](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/OPERATIONS-SOP.md)
+- [最終上線檢查表](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/FINAL-LAUNCH-CHECKLIST.md)
 
 ### `docs/client`
 偏對外說明、客戶交付、驗收附件。
@@ -26,6 +27,7 @@
 1. [交付清單](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/DELIVERY-CHECKLIST.md)
 2. [完整交接說明](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/HANDOFF-GUIDE.md)
 3. [營運 SOP](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/OPERATIONS-SOP.md)
+4. [最終上線檢查表](C:/Users/user/Desktop/AI-VIDIO/docs/handoff/FINAL-LAUNCH-CHECKLIST.md)
 
 ### 客戶驗收 / 對外交付
 

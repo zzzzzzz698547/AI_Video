@@ -2021,6 +2021,75 @@ select:focus {
     width: 100%;
     justify-content: center;
   }
+
+  .url-verify-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .url-verify-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .url-preview-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .url-preview-cover {
+    min-height: 196px;
+  }
+
+  .url-preview-body {
+    padding: 14px;
+  }
+
+  .analysis-stepper {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .analysis-stepper-vertical {
+    gap: 8px;
+  }
+
+  .analysis-step {
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .analysis-step-index {
+    width: 26px;
+    height: 26px;
+    font-size: 0.78rem;
+  }
+
+  .analysis-sidecard,
+  .summary-card {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .choice-grid {
+    gap: 12px;
+  }
+
+  .choice-grid-compact {
+    gap: 10px;
+  }
+
+  .list-item {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .variant-copy,
+  .list-subtitle,
+  .panel-desc {
+    line-height: 1.55;
+  }
 }
 
 .binding-summary-progress {

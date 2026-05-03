@@ -1435,4 +1435,69 @@ select:focus {
   .toolbar > * {
     flex: 1 1 auto;
   }
+
+  .panel {
+    border-radius: 22px;
+  }
+
+  .panel-inner,
+  .manual-bind-card {
+    padding: 16px;
+  }
+
+  .integration-toolbar {
+    gap: 10px;
+  }
+
+  .toolbar-note {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .badge-row {
+    gap: 8px;
+  }
+
+  .badge-row .badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .manual-bind-card .form-grid {
+    gap: 12px;
+  }
+
+  .manual-bind-card .input,
+  .manual-bind-card .textarea,
+  .manual-bind-card .select-field,
+  .select-field {
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .manual-bind-card .textarea {
+    min-height: 110px;
+  }
+
+  .integration-actions.compact,
+  .integration-actions {
+    gap: 10px;
+  }
+
+  .integration-card,
+  .tutorial-card,
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .permission-stage-grid {
+    gap: 10px;
+  }
+
+  .permission-stage-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
 }

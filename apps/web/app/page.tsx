@@ -112,6 +112,12 @@ const QUICK_WORKFLOWS = [
   }
 ];
 
+const CONTROL_SURFACE = [
+  ["網址分析", "先抓競品結構與精華，後面再直接送進影片工作台。"],
+  ["內容生成", "商品 / 關鍵字生成文案與腳本，當作影片素材與發布底稿。"],
+  ["社群發布", "把 READY 影片送進發布中心，統一管理文案、排程與平台輸出。"]
+];
+
 const defaultForm = {
   productName: "",
   productDescription: "",
@@ -294,6 +300,26 @@ export default function ContentStudioPage() {
                   <p className="hero-action-copy">{item.description}</p>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="panel" style={{ marginBottom: 20 }}>
+        <div className="panel-inner">
+          <div className="panel-header">
+            <div>
+              <h2 className="panel-title">登入後工作台焦點</h2>
+              <p className="panel-desc">把今天最常操作的三段流程放在首屏，登入後就能直接接著跑，不用先找功能在哪。</p>
+            </div>
+            <span className="status status-success">Workspace Ready</span>
+          </div>
+          <div className="choice-grid choice-grid-compact">
+            {CONTROL_SURFACE.map(([title, note]) => (
+              <article key={title} className="variant-card">
+                <h3 className="variant-title">{title}</h3>
+                <p className="variant-copy">{note}</p>
+              </article>
             ))}
           </div>
         </div>

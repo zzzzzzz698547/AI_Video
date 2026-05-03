@@ -12,11 +12,6 @@ export class AuthController {
     return ok(this.authService.loginAdmin(body));
   }
 
-  @Get("admin/debug-env")
-  adminDebugEnv(@Query("username") username?: string, @Query("password") password?: string) {
-    return ok(this.authService.inspectAdminCredentials(username, password));
-  }
-
   @Get("admin/session")
   adminSession(@Query("token") token?: string) {
     if (!token?.trim()) {

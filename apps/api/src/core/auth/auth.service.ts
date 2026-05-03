@@ -48,38 +48,6 @@ export class AuthService {
     };
   }
 
-  inspectAdminCredentials(username?: string, password?: string) {
-    const rawUsername = process.env.ADMIN_LOGIN_USERNAME ?? "";
-    const rawPassword = process.env.ADMIN_LOGIN_PASSWORD ?? "";
-    const normalizedUsername = this.normalizeCredential(rawUsername);
-    const normalizedPassword = this.normalizeCredential(rawPassword);
-    const inputUsername = username === undefined ? null : this.normalizeCredential(username);
-    const inputPassword = password === undefined ? null : this.normalizeCredential(password);
-
-    return {
-      configured: {
-        usernamePresent: rawUsername.length > 0,
-        passwordPresent: rawPassword.length > 0,
-        displayName: process.env.ADMIN_LOGIN_DISPLAY_NAME?.trim() || "System Admin",
-        rawUsernameLength: rawUsername.length,
-        rawPasswordLength: rawPassword.length,
-        normalizedUsernameLength: normalizedUsername.length,
-        normalizedPasswordLength: normalizedPassword.length,
-        usernamePreview: normalizedUsername ? `${normalizedUsername.slice(0, 2)}***${normalizedUsername.slice(-2)}` : null
-      },
-      comparison:
-        inputUsername === null && inputPassword === null
-          ? null
-          : {
-              inputUsernameLength: inputUsername?.length ?? 0,
-              inputPasswordLength: inputPassword?.length ?? 0,
-              usernameMatch: inputUsername === normalizedUsername,
-              passwordMatch: inputPassword === normalizedPassword,
-              bothMatch: inputUsername === normalizedUsername && inputPassword === normalizedPassword
-            }
-    };
-  }
-
   private createSession(username: string) {
     const now = Date.now();
     const payload: AdminSessionPayload = {

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 import type { ReactNode } from "react";
-import { AdminSessionBar } from "../components/admin-session-bar";
+import { AdminChrome } from "../components/admin-chrome";
 import { TenantGate } from "../components/tenant-gate";
 
 export const dynamic = "force-dynamic";
@@ -16,26 +15,23 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-Hant">
       <body>
-        <div className="dashboard">
-          <aside className="sidebar">
-            <div className="brand">AI-VIDIO</div>
-            <nav className="nav">
-              <Link href="/login">管理員登入</Link>
-              <Link href="/license-center">授權中心</Link>
-              <Link href="/">核心架構</Link>
-              <Link href="/integrations">社群綁定</Link>
-              <Link href="/analytics">數據分析中心</Link>
-              <Link href="/funnel-center">轉單中心</Link>
-              <Link href="/ai-customer-center">AI 客服中心</Link>
-              <Link href="/?section=modules">模組總覽</Link>
-              <Link href="/?section=queues">任務佇列</Link>
-            </nav>
-          </aside>
-          <main className="content">
-            <AdminSessionBar />
-            <TenantGate>{children}</TenantGate>
-          </main>
-        </div>
+        <TenantGate>
+          <AdminChrome
+            navItems={[
+              { href: "/login", label: "管理員登入" },
+              { href: "/license-center", label: "授權中心" },
+              { href: "/", label: "核心架構" },
+              { href: "/integrations", label: "社群綁定" },
+              { href: "/analytics", label: "數據分析中心" },
+              { href: "/funnel-center", label: "轉單中心" },
+              { href: "/ai-customer-center", label: "AI 客服中心" },
+              { href: "/?section=modules", label: "模組總覽" },
+              { href: "/?section=queues", label: "任務佇列" }
+            ]}
+          >
+            {children}
+          </AdminChrome>
+        </TenantGate>
       </body>
     </html>
   );

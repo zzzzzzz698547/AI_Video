@@ -1922,6 +1922,105 @@ select:focus {
   .toolbar > * {
     flex: 1 1 auto;
   }
+
+  .hero-panel {
+    border-radius: 24px;
+  }
+
+  .hero-inner,
+  .panel-inner {
+    gap: 16px;
+  }
+
+  .page-grid {
+    gap: 16px;
+  }
+
+  .video-frame {
+    border-radius: 18px;
+  }
+
+  .binding-layout {
+    gap: 14px;
+  }
+
+  .binding-summary-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .binding-provider-grid {
+    gap: 14px;
+  }
+
+  .binding-provider-grid > .variant-card,
+  .binding-sidebar > .summary-card,
+  .binding-sidebar > .variant-card {
+    border-radius: 20px;
+  }
+
+  .binding-account-banner,
+  .binding-feedback-card,
+  .binding-model-card {
+    padding: 14px;
+  }
+
+  .binding-account-value {
+    font-size: 0.94rem;
+  }
+
+  .binding-mode-switcher,
+  .binding-action-grid {
+    gap: 10px;
+  }
+
+  .binding-mode-button,
+  .binding-toggle,
+  .binding-action-button {
+    min-height: 54px;
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .binding-action-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+  }
+
+  .binding-action-text strong,
+  .binding-model-value {
+    font-size: 0.9rem;
+  }
+
+  .binding-action-text small,
+  .binding-account-meta,
+  .binding-account-title {
+    font-size: 0.78rem;
+  }
+
+  .meta-row {
+    gap: 8px;
+  }
+
+  .meta {
+    padding: 6px 10px;
+    font-size: 0.76rem;
+  }
+
+  .variant-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .variant-tabs {
+    gap: 8px;
+  }
+
+  .chip {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .binding-summary-progress {

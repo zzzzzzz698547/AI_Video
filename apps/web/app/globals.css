@@ -2090,6 +2090,79 @@ select:focus {
   .panel-desc {
     line-height: 1.55;
   }
+
+  .admin-login-form,
+  .license-panel form {
+    gap: 16px;
+  }
+
+  .admin-login-grid,
+  .license-summary-grid {
+    gap: 12px;
+  }
+
+  .admin-login-note-card,
+  .license-summary-card,
+  .workspace-guard-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .admin-login-inline-chip {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tenant-license-banner {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .license-panel .panel-title,
+  .workspace-guard-card h1 {
+    font-size: 1.9rem;
+    line-height: 1.08;
+  }
+
+  .license-panel .input,
+  .admin-login-input {
+    min-height: 50px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .license-panel .textarea {
+    min-height: 112px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .page-grid aside.stack {
+    gap: 16px;
+  }
+
+  .field > .toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .field > .toolbar .chip,
+  .variant-tabs .chip {
+    width: auto;
+    flex: 1 1 calc(50% - 8px);
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 16px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 9px;
+  }
 }
 
 .binding-summary-progress {
